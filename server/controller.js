@@ -33,14 +33,14 @@ module.exports = {
         sequelize.query(`
         UPDATE cc_appointments
         SET approved = true
-        WHERE apptId = appt_id
+        WHERE appt_id = ${apptId};
         
         INSERT INTO cc_emp_appts (emp_id, appt_id)
         values (${nextEmp}, ${apptId}),
-        (${nextEmp + 1}, ${apptId});
-        `)
-            .then(dbRes => {
-                res.status(200).send(dbRes[0])
+        (${nextEmp + 1}, ${apptId});`)
+        .then(dbRes => {
+            res.status(200).send(dbRes[0])
+            console.log('approved')
                 nextEmp += 2
             })
             .catch(err => console.log(err))
